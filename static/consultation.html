@@ -1,20 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Консультация</title>
+  <meta charset="UTF-8">
+  <title>Отправка PDF</title>
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
   <div class="container">
-    <h2>💬 Консультативное заключение</h2>
-    <form method="post" enctype="multipart/form-data" action="/send_email">
+    <h2>📤 Отправка PDF пациенту</h2>
+    <form method="post" action="/send_email" enctype="multipart/form-data">
       <label>Email пациента: <input type="email" name="email" required></label>
-      <label>PDF протокол: <input type="file" name="file" accept="application/pdf" required></label>
-      <button type="submit">Отправить PDF</button>
+      <label>Файл PDF: <input type="file" name="file" accept="application/pdf" required></label>
+      <button type="submit">Отправить</button>
     </form>
-    <a href="/">Назад к УЗИ</a>
+    <a href="/">Назад</a>
   </div>
 </body>
 </html>

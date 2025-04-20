@@ -2,7 +2,6 @@
 body {
   font-family: sans-serif;
   background: #f4f4f4;
-  margin: 0;
   padding: 20px;
 }
 .container {
@@ -11,12 +10,12 @@ body {
 }
 label {
   display: block;
-  margin: 10px 0 5px;
+  margin-top: 10px;
 }
 input, textarea {
   width: 100%;
   padding: 8px;
-  box-sizing: border-box;
+  margin-top: 5px;
 }
 button {
   margin-top: 15px;
