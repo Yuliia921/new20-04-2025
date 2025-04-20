@@ -6,7 +6,7 @@ body {
   padding: 20px;
 }
 .container {
-  max-width: 500px;
+  max-width: 600px;
   margin: auto;
 }
 label {
@@ -25,5 +25,5 @@ button {
 }
 a {
   display: inline-block;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
