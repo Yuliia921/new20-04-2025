@@ -7,7 +7,6 @@ import os
 import uuid
 
 app = FastAPI()
-
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
