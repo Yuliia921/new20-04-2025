@@ -1,5 +1,5 @@
 
-from fastapi import FastAPI, Form, UploadFile, File
+from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fpdf import FPDF
@@ -7,6 +7,9 @@ import uuid
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+def remove_non_latin1(text):
+    return ''.join(c for c in text if ord(c) < 256)
 
 @app.get("/")
 def root():
@@ -57,8 +60,9 @@ async def generate_pdf(
     ]
 
     for label, value in fields:
+        clean_value = remove_non_latin1(value)
         pdf.set_font("Helvetica", size=12)
-        pdf.multi_cell(0, 10, f"{label}: {value}")
+        pdf.multi_cell(0, 10, f"{label}: {clean_value}")
 
     pdf.ln(10)
     pdf.set_font("Helvetica", size=11)
