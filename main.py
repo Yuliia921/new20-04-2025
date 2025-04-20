@@ -36,7 +36,7 @@ async def generate_pdf(
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Helvetica", size=14)
-    pdf.cell(0, 10, "🌸 УЗИ малого таза (беременность)", ln=True, align="C")
+    pdf.cell(0, 10, "УЗИ малого таза (беременность)", ln=True, align="C")
     pdf.ln(10)
 
     fields = [
