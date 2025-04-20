@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💬 Консультация</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>💬 Консультативное заключение</h2>
+    <a href="/">Перейти к УЗИ</a>
+    <form method="post" enctype="multipart/form-data" action="/send_email">
+      <label>Email пациента: <input type="email" name="email" required></label>
+      <label>PDF протокол: <input type="file" name="file" accept="application/pdf" required></label>
+      <button type="submit">Отправить PDF</button>
+    </form>
+  </div>
+</body>
+</html>
