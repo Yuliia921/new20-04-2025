@@ -2,14 +2,15 @@
 from fastapi import FastAPI, Form, UploadFile, File
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-import smtplib
-from email.message import EmailMessage
 from fpdf import FPDF
 import uuid
+import smtplib
+from email.message import EmailMessage
 import os
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/fonts", StaticFiles(directory="fonts"), name="fonts")
 
 @app.get("/")
 def root():
@@ -42,7 +43,7 @@ async def generate_pdf(
 ):
     pdf = FPDF()
     pdf.add_page()
-    pdf.add_font("DejaVu", "", "static/DejaVuSans.ttf", uni=True)
+    pdf.add_font("DejaVu", "", "fonts/DejaVuSans.ttf", uni=True)
     pdf.set_font("DejaVu", "", 14)
     pdf.cell(0, 10, "🌸 УЗИ малого таза (беременность)", ln=True, align="C")
     pdf.ln(10)
@@ -90,7 +91,7 @@ async def generate_consultation(
 ):
     pdf = FPDF()
     pdf.add_page()
-    pdf.add_font("DejaVu", "", "static/DejaVuSans.ttf", uni=True)
+    pdf.add_font("DejaVu", "", "fonts/DejaVuSans.ttf", uni=True)
     pdf.set_font("DejaVu", "", 14)
     pdf.cell(0, 10, "💬 Консультативное заключение", ln=True, align="C")
     pdf.ln(10)
