@@ -2,6 +2,8 @@
 from fastapi import FastAPI, Form, UploadFile, File
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+import smtplib
+from email.message import EmailMessage
 from fpdf import FPDF
 import uuid
 import os
@@ -114,9 +116,6 @@ async def generate_consultation(
 
 @app.post("/send_email")
 async def send_email(email: str = Form(...), file: UploadFile = File(...)):
-    import smtplib
-    from email.message import EmailMessage
-
     smtp_user = os.getenv("SMTP_USER")
     smtp_pass = os.getenv("SMTP_PASS")
 
