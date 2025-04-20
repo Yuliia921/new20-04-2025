@@ -1,9 +1,8 @@
 
 from fastapi import FastAPI, Form, UploadFile, File
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fpdf import FPDF
-import os
 import uuid
 
 app = FastAPI()
@@ -36,8 +35,7 @@ async def generate_pdf(
 ):
     pdf = FPDF()
     pdf.add_page()
-    pdf.add_font("DejaVu", "", "static/DejaVuSans.ttf", uni=True)
-    pdf.set_font("DejaVu", "", 14)
+    pdf.set_font("Helvetica", size=14)
     pdf.cell(0, 10, "🌸 УЗИ малого таза (беременность)", ln=True, align="C")
     pdf.ln(10)
 
@@ -59,10 +57,11 @@ async def generate_pdf(
     ]
 
     for label, value in fields:
+        pdf.set_font("Helvetica", size=12)
         pdf.multi_cell(0, 10, f"{label}: {value}")
 
     pdf.ln(10)
-    pdf.set_font("DejaVu", "", 12)
+    pdf.set_font("Helvetica", size=11)
     pdf.cell(0, 10, "врач акушер-гинеколог Куриленко Юлия Сергеевна", ln=True)
     pdf.cell(0, 10, "Телефон: +374 55 98 77 15", ln=True)
     pdf.cell(0, 10, "Telegram: t.me/ginekolog_doc_bot", ln=True)
