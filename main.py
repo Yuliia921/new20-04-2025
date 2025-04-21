@@ -74,9 +74,9 @@ async def generate_pdf(
     pdf.set_font("DejaVu", "", 12)
     for label, value in fields:
         try:
-            pdf.multi_cell(0, 10, clean(f"{label}: {value}"))
+            pdf.multi_cell(180, 10, clean(f"{label}: {value}"))
         except Exception:
-            pdf.multi_cell(0, 10, "-")
+            pdf.multi_cell(180, 10, "-")
 
     pdf.ln(10)
     pdf.set_font("DejaVu", "", 11)
@@ -110,9 +110,9 @@ async def generate_consultation(
         ("Диагноз", diagnosis), ("Обследование", examination), ("Рекомендации", recommendations)
     ]:
         try:
-            pdf.multi_cell(0, 10, clean(f"{label}: {value}"))
+            pdf.multi_cell(180, 10, clean(f"{label}: {value}"))
         except Exception:
-            pdf.multi_cell(0, 10, "-")
+            pdf.multi_cell(180, 10, "-")
 
     pdf.ln(10)
     pdf.set_font("DejaVu", "", 11)
