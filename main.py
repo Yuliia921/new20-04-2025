@@ -71,3 +71,7 @@ async def generate_pdf(
     filename = f"/tmp/protocol_{uuid4().hex}.pdf"
     pdf.output(filename)
     return FileResponse(filename, media_type="application/pdf", filename="protocol.pdf")
+    @app.get("/")
+def root():
+    return {"message": "Док Куриленко работает!"}
+
