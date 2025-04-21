@@ -70,7 +70,10 @@ async def generate_pdf(
 
     pdf.set_font("DejaVu", "", 12)
     for label, value in fields:
+        try:
         pdf.multi_cell(0, 10, clean(f"{label}: {value}"))
+    except:
+        pdf.multi_cell(0, 10, "-")
 
     pdf.ln(10)
     pdf.set_font("DejaVu", "", 11)
@@ -99,12 +102,30 @@ async def generate_consultation(
     pdf.ln(10)
 
     pdf.set_font("DejaVu", "", 12)
-    pdf.multi_cell(0, 10, clean(f"Дата: {date}"))
-    pdf.multi_cell(0, 10, clean(f"ФИО: {fio}"))
-    pdf.multi_cell(0, 10, clean(f"Возраст: {age}"))
-    pdf.multi_cell(0, 10, clean(f"Диагноз: {diagnosis}"))
-    pdf.multi_cell(0, 10, clean(f"Обследование: {examination}"))
-    pdf.multi_cell(0, 10, clean(f"Рекомендации: {recommendations}"))
+    try:
+        pdf.multi_cell(0, 10, clean(f"Дата: {date}"))
+    except:
+        pdf.multi_cell(0, 10, "-")
+    try:
+        pdf.multi_cell(0, 10, clean(f"ФИО: {fio}"))
+    except:
+        pdf.multi_cell(0, 10, "-")
+    try:
+        pdf.multi_cell(0, 10, clean(f"Возраст: {age}"))
+    except:
+        pdf.multi_cell(0, 10, "-")
+    try:
+        pdf.multi_cell(0, 10, clean(f"Диагноз: {diagnosis}"))
+    except:
+        pdf.multi_cell(0, 10, "-")
+    try:
+        pdf.multi_cell(0, 10, clean(f"Обследование: {examination}"))
+    except:
+        pdf.multi_cell(0, 10, "-")
+    try:
+        pdf.multi_cell(0, 10, clean(f"Рекомендации: {recommendations}"))
+    except:
+        pdf.multi_cell(0, 10, "-")
 
     pdf.ln(10)
     pdf.set_font("DejaVu", "", 11)
