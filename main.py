@@ -1,56 +1,63 @@
 
-from fastapi import FastAPI, Request, Form
-from fastapi.responses import FileResponse, HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from uuid import uuid4
+from fastapi import FastAPI, Form
+from fastapi.responses import FileResponse
 from fpdf import FPDF
 import os
+import uuid
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    with open("static/index.html", encoding="utf-8") as f:
-        return HTMLResponse(content=f.read())
+os.makedirs("/mnt/data", exist_ok=True)
 
 @app.post("/generate_pdf")
-async def generate_pdf(request: Request):
-    form = await request.form()
-    data = dict(form)
-
-    class PDF(FPDF):
-        def header(self):
-            self.set_font("DejaVu", "B", 14)
-            self.cell(0, 10, "Протокол УЗИ", ln=True, align="C")
-            self.ln(10)
-
-    pdf = PDF()
+async def generate_pdf(
+    fio: str = Form(...),
+    lmp: str = Form(...),
+    uterus: str = Form(...),
+    gestationalSac: str = Form(...),
+    crl: str = Form(...),
+    term: str = Form(...),
+    yolkSac: str = Form(...),
+    heartbeat: str = Form(...),
+    hr: str = Form(...),
+    chorion: str = Form(...),
+    corpusLuteum: str = Form(...),
+    additional: str = Form(...),
+    conclusion: str = Form(...),
+    recommendations: str = Form(...)
+):
+    pdf = FPDF()
     pdf.add_page()
     pdf.add_font("DejaVu", "", "DejaVuSans.ttf", uni=True)
     pdf.add_font("DejaVu", "B", "DejaVuSans-Bold.ttf", uni=True)
-    pdf.set_font("DejaVu", size=12)
+    pdf.set_font("DejaVu", "B", 16)
+    pdf.cell(0, 10, "УЗИ малого таза (беременность)", ln=True, align="C")
 
-    def clean(text):
-        try:
-            return str(text)
-        except Exception:
-            return "-"
+    pdf.set_font("DejaVu", "", 12)
+    fields = {
+        "ФИО пациентки": fio,
+        "Последняя менструация": lmp,
+        "Положение и форма матки": uterus,
+        "Плодное яйцо (мм)": gestationalSac,
+        "КТР (мм)": crl,
+        "Срок (нед)": term,
+        "Желточный мешок (мм)": yolkSac,
+        "Сердцебиение": heartbeat,
+        "ЧСС (уд/мин)": hr,
+        "Расположение хориона": chorion,
+        "Желтое тело": corpusLuteum,
+        "Дополнительные данные": additional,
+        "Заключение": conclusion,
+        "Рекомендации": recommendations
+    }
 
-    for label, value in data.items():
-        try:
-            pdf.multi_cell(0, 10, clean(f"{label}: {value or '-'}"))
-        except Exception:
-            pdf.multi_cell(0, 10, "-")
+    for label, value in fields.items():
+        pdf.multi_cell(0, 10, f"{label}: {value or '-'}")
 
     pdf.ln(10)
-    pdf.set_font("DejaVu", size=10)
-    pdf.multi_cell(0, 8, "врач акушер-гинеколог Куриленко Юлия Сергеевна
-+37455987715
-https://t.me/ginekolog_doc_bot")
+    pdf.set_font("DejaVu", "", 10)
+    pdf.multi_cell(0, 8, "врач акушер-гинеколог Куриленко Юлия Сергеевна")
 
-    filename = f"/mnt/data/protocol_{uuid4().hex}.pdf"
-    os.makedirs("/mnt/data", exist_ok=True)
+    filename = f"/mnt/data/protocol_{uuid.uuid4().hex}.pdf"
     pdf.output(filename)
     return FileResponse(filename, media_type="application/pdf", filename="protocol.pdf")
