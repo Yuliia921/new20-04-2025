@@ -9,7 +9,10 @@ from email.message import EmailMessage
 import os
 
 def clean(text):
-    return (text or '-').encode('latin-1', 'replace').decode('latin-1')
+    try:
+        return (text or "-").encode("latin-1", "replace").decode("latin-1")
+    except Exception:
+        return "-"
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -71,9 +74,9 @@ async def generate_pdf(
     pdf.set_font("DejaVu", "", 12)
     for label, value in fields:
         try:
-        pdf.multi_cell(0, 10, clean(f"{label}: {value}"))
-    except:
-        pdf.multi_cell(0, 10, "-")
+            pdf.multi_cell(0, 10, clean(f"{label}: {value}"))
+        except Exception:
+            pdf.multi_cell(0, 10, "-")
 
     pdf.ln(10)
     pdf.set_font("DejaVu", "", 11)
@@ -102,30 +105,14 @@ async def generate_consultation(
     pdf.ln(10)
 
     pdf.set_font("DejaVu", "", 12)
-    try:
-        pdf.multi_cell(0, 10, clean(f"Дата: {date}"))
-    except:
-        pdf.multi_cell(0, 10, "-")
-    try:
-        pdf.multi_cell(0, 10, clean(f"ФИО: {fio}"))
-    except:
-        pdf.multi_cell(0, 10, "-")
-    try:
-        pdf.multi_cell(0, 10, clean(f"Возраст: {age}"))
-    except:
-        pdf.multi_cell(0, 10, "-")
-    try:
-        pdf.multi_cell(0, 10, clean(f"Диагноз: {diagnosis}"))
-    except:
-        pdf.multi_cell(0, 10, "-")
-    try:
-        pdf.multi_cell(0, 10, clean(f"Обследование: {examination}"))
-    except:
-        pdf.multi_cell(0, 10, "-")
-    try:
-        pdf.multi_cell(0, 10, clean(f"Рекомендации: {recommendations}"))
-    except:
-        pdf.multi_cell(0, 10, "-")
+    for label, value in [
+        ("Дата", date), ("ФИО", fio), ("Возраст", age),
+        ("Диагноз", diagnosis), ("Обследование", examination), ("Рекомендации", recommendations)
+    ]:
+        try:
+            pdf.multi_cell(0, 10, clean(f"{label}: {value}"))
+        except Exception:
+            pdf.multi_cell(0, 10, "-")
 
     pdf.ln(10)
     pdf.set_font("DejaVu", "", 11)
