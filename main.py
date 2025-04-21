@@ -45,7 +45,7 @@ async def generate_pdf(
     pdf.add_page()
     pdf.add_font("DejaVu", "", "fonts/DejaVuSans.ttf", uni=True)
     pdf.set_font("DejaVu", "", 14)
-    pdf.cell(0, 10, "🌸 УЗИ малого таза (беременность)", ln=True, align="C")
+    pdf.cell(0, 10, "УЗИ малого таза (беременность)", ln=True, align="C")
     pdf.ln(10)
 
     fields = [
@@ -67,7 +67,7 @@ async def generate_pdf(
 
     pdf.set_font("DejaVu", "", 12)
     for label, value in fields:
-        pdf.multi_cell(0, 10, f"{label}: {value}")
+        pdf.multi_cell(0, 10, f"{label}: {value or '-'}")
 
     pdf.ln(10)
     pdf.set_font("DejaVu", "", 11)
@@ -92,16 +92,16 @@ async def generate_consultation(
     pdf.add_page()
     pdf.add_font("DejaVu", "", "fonts/DejaVuSans.ttf", uni=True)
     pdf.set_font("DejaVu", "", 14)
-    pdf.cell(0, 10, "💬 Консультативное заключение", ln=True, align="C")
+    pdf.cell(0, 10, "Консультативное заключение", ln=True, align="C")
     pdf.ln(10)
 
     pdf.set_font("DejaVu", "", 12)
-    pdf.multi_cell(0, 10, f"Дата: {date}")
-    pdf.multi_cell(0, 10, f"ФИО: {fio}")
-    pdf.multi_cell(0, 10, f"Возраст: {age}")
-    pdf.multi_cell(0, 10, f"Диагноз: {diagnosis}")
-    pdf.multi_cell(0, 10, f"Обследование: {examination}")
-    pdf.multi_cell(0, 10, f"Рекомендации: {recommendations}")
+    pdf.multi_cell(0, 10, f"Дата: {date or '-'}")
+    pdf.multi_cell(0, 10, f"ФИО: {fio or '-'}")
+    pdf.multi_cell(0, 10, f"Возраст: {age or '-'}")
+    pdf.multi_cell(0, 10, f"Диагноз: {diagnosis or '-'}")
+    pdf.multi_cell(0, 10, f"Обследование: {examination or '-'}")
+    pdf.multi_cell(0, 10, f"Рекомендации: {recommendations or '-'}")
 
     pdf.ln(10)
     pdf.set_font("DejaVu", "", 11)
