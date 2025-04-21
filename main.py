@@ -85,7 +85,8 @@ async def generate_pdf(
     pdf.cell(0, 10, clean("Telegram: t.me/ginekolog_doc_bot"), ln=True)
 
     filename = f"/mnt/data/protocol_{uuid.uuid4().hex}.pdf"
-    pdf.output(filename)
+    os.makedirs("/mnt/data", exist_ok=True)
+pdf.output(filename)
     return FileResponse(filename, media_type="application/pdf", filename="protocol.pdf")
 
 @app.post("/generate_consultation")
