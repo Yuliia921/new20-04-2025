@@ -6,7 +6,8 @@ from uuid import uuid4
 
 app = FastAPI()
 
-os.makedirs("/mnt/data", exist_ok=True)
+# Разрешённая директория на Render
+os.makedirs("/tmp", exist_ok=True)
 
 def clean(text):
     try:
@@ -67,6 +68,6 @@ async def generate_pdf(
     pdf.set_font("DejaVu", "", 10)
     pdf.multi_cell(0, 8, "врач акушер-гинеколог Куриленко Юлия Сергеевна")
 
-    filename = f"/mnt/data/protocol_{uuid4().hex}.pdf"
+    filename = f"/tmp/protocol_{uuid4().hex}.pdf"
     pdf.output(filename)
     return FileResponse(filename, media_type="application/pdf", filename="protocol.pdf")
