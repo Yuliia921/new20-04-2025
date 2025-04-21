@@ -16,13 +16,13 @@ app.mount("/fonts", StaticFiles(directory="fonts"), name="fonts")
 def root():
     return FileResponse("static/pregnancy.html")
 
-@app.get("/consultation")
-def consultation():
-    return FileResponse("static/consultation.html")
-
 @app.get("/consultation_form")
 def consultation_form():
     return FileResponse("static/consultation_form.html")
+
+@app.get("/consultation")
+def consultation():
+    return FileResponse("static/consultation.html")
 
 @app.post("/generate_pdf")
 async def generate_pdf(
