@@ -6,7 +6,7 @@ from uuid import uuid4
 
 app = FastAPI()
 
-# Разрешённая директория на Render
+# Создаём папку для временного хранения PDF
 os.makedirs("/tmp", exist_ok=True)
 
 def clean(text):
@@ -71,7 +71,8 @@ async def generate_pdf(
     filename = f"/tmp/protocol_{uuid4().hex}.pdf"
     pdf.output(filename)
     return FileResponse(filename, media_type="application/pdf", filename="protocol.pdf")
-    @app.get("/")
+
+@app.get("/")
 def root():
     return {"message": "Док Куриленко работает!"}
 
