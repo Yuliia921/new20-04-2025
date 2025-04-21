@@ -2,3 +2,4 @@ fastapi
 uvicorn
 fpdf2>=2.7.6
 python-multipart
+Jinja2>=3.1.2
