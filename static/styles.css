@@ -1,28 +1,7 @@
 
-body {
-  font-family: sans-serif;
-  background: #f4f4f4;
-  padding: 20px;
-}
-.container {
-  max-width: 600px;
-  margin: auto;
-}
-label {
-  display: block;
-  margin-top: 10px;
-}
-input, textarea {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-}
-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  font-size: 16px;
-}
-a {
-  display: inline-block;
-  margin-top: 20px;
-}
+body { font-family: sans-serif; background: #f8f8f8; padding: 20px; }
+.container { max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px #ccc; }
+label { display: block; margin-top: 15px; }
+input, textarea { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+button { margin-top: 15px; padding: 10px 20px; font-size: 16px; background: #007bff; color: white; border: none; border-radius: 5px; }
+a { display: inline-block; margin-top: 20px; }

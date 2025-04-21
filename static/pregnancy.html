@@ -3,30 +3,30 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>УЗИ</title>
+  <title>🤰 УЗИ</title>
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-  <div class="container">
-    <h2>🤰 УЗИ малого таза (беременность)</h2>
-    <form action="/generate_pdf" method="post">
-      <label>ФИО: <input name="fio"></label>
-      <label>Последняя менструация: <input name="lmp" type="date"></label>
-      <label>Положение и форма матки: <input name="uterus"></label>
-      <label>Плодное яйцо (мм): <input name="gestationalSac"></label>
-      <label>КТР (мм): <input name="crl"></label>
-      <label>Срок (нед): <input name="term"></label>
-      <label>Желточный мешок (мм): <input name="yolkSac"></label>
-      <label>Сердцебиение: <input name="heartbeat"></label>
-      <label>ЧСС (уд/мин): <input name="hr"></label>
-      <label>Расположение хориона: <input name="chorion"></label>
-      <label>Желтое тело: <input name="corpusLuteum"></label>
-      <label>Дополнительные данные: <textarea name="additional"></textarea></label>
-      <label>Заключение: <textarea name="conclusion"></textarea></label>
-      <label>Рекомендации: <textarea name="recommendations"></textarea></label>
-      <button type="submit">📄 Скачать PDF</button>
-    </form>
-    <a href="/consultation_form">Перейти к консультативному заключению</a>
-  </div>
+<div class="container">
+  <h2>🤰 УЗИ малого таза (беременность)</h2>
+  <form method="post" action="/generate_pdf">
+    <label>ФИО: <input name="fio" /></label>
+    <label>Последняя менструация: <input name="lmp" type="date" /></label>
+    <label>Матка: <input name="uterus" /></label>
+    <label>Плодное яйцо: <input name="gestationalSac" /></label>
+    <label>КТР: <input name="crl" /></label>
+    <label>Срок: <input name="term" /></label>
+    <label>Желточный мешок: <input name="yolkSac" /></label>
+    <label>Сердцебиение: <input name="heartbeat" /></label>
+    <label>ЧСС: <input name="hr" /></label>
+    <label>Хорион: <input name="chorion" /></label>
+    <label>Желтое тело: <input name="corpusLuteum" /></label>
+    <label>Дополнительно: <textarea name="additional"></textarea></label>
+    <label>Заключение: <textarea name="conclusion"></textarea></label>
+    <label>Рекомендации: <textarea name="recommendations"></textarea></label>
+    <button type="submit">📄 Скачать PDF</button>
+  </form>
+  <a href="/consultation_form">Консультативное заключение</a> | <a href="/consultation">Отправить PDF</a>
+</div>
 </body>
 </html>
