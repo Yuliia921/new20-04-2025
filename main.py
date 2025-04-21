@@ -1,11 +1,18 @@
-
+import os
 from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
 from fpdf import FPDF
-import uuid
+from uuid import uuid4
 
 app = FastAPI()
 
+os.makedirs("/mnt/data", exist_ok=True)
+
+def clean(text):
+    try:
+        return text.encode("latin1").decode("latin1")
+    except UnicodeEncodeError:
+        return "-"
 
 @app.post("/generate_pdf")
 async def generate_pdf(
@@ -22,19 +29,15 @@ async def generate_pdf(
     corpusLuteum: str = Form(...),
     additional: str = Form(...),
     conclusion: str = Form(...),
-    recommendations: str = Form(...),
+    recommendations: str = Form(...)
 ):
-    def clean(text):
-        if not text or text.strip() == "":
-            return "-"
-        return text.replace("🌸", "").replace("🤰", "")
-
     pdf = FPDF()
     pdf.add_page()
     pdf.add_font("DejaVu", "", "DejaVuSans.ttf", uni=True)
     pdf.add_font("DejaVu", "B", "DejaVuSans-Bold.ttf", uni=True)
     pdf.set_font("DejaVu", "B", 16)
     pdf.cell(0, 10, "УЗИ малого таза (беременность)", ln=True, align="C")
+    pdf.ln(10)
     pdf.set_font("DejaVu", "", 12)
 
     fields = [
@@ -54,16 +57,16 @@ async def generate_pdf(
         ("Рекомендации", recommendations),
     ]
 
-    pdf.ln(5)
     for label, value in fields:
         try:
             pdf.multi_cell(0, 10, clean(f"{label}: {value or '-'}"))
-        except Exception:
-            pdf.multi_cell(0, 10, "-")
+        except:
+            pdf.multi_cell(0, 10, f"{label}: -")
 
     pdf.ln(5)
     pdf.set_font("DejaVu", "", 10)
     pdf.multi_cell(0, 8, "врач акушер-гинеколог Куриленко Юлия Сергеевна")
-    filename = f"/mnt/data/protocol_{uuid.uuid4().hex}.pdf"
+
+    filename = f"/mnt/data/protocol_{uuid4().hex}.pdf"
     pdf.output(filename)
     return FileResponse(filename, media_type="application/pdf", filename="protocol.pdf")
