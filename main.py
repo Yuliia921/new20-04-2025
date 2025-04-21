@@ -8,6 +8,9 @@ import smtplib
 from email.message import EmailMessage
 import os
 
+def clean(text):
+    return (text or '-').encode('latin-1', 'replace').decode('latin-1')
+
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/fonts", StaticFiles(directory="fonts"), name="fonts")
@@ -45,7 +48,7 @@ async def generate_pdf(
     pdf.add_page()
     pdf.add_font("DejaVu", "", "fonts/DejaVuSans.ttf", uni=True)
     pdf.set_font("DejaVu", "", 14)
-    pdf.cell(0, 10, "УЗИ малого таза (беременность)", ln=True, align="C")
+    pdf.cell(0, 10, clean("УЗИ малого таза (беременность)"), ln=True, align="C")
     pdf.ln(10)
 
     fields = [
@@ -67,13 +70,13 @@ async def generate_pdf(
 
     pdf.set_font("DejaVu", "", 12)
     for label, value in fields:
-        pdf.multi_cell(0, 10, f"{label}: {value or '-'}")
+        pdf.multi_cell(0, 10, clean(f"{label}: {value}"))
 
     pdf.ln(10)
     pdf.set_font("DejaVu", "", 11)
-    pdf.cell(0, 10, "врач акушер-гинеколог Куриленко Юлия Сергеевна", ln=True)
-    pdf.cell(0, 10, "Телефон: +374 55 98 77 15", ln=True)
-    pdf.cell(0, 10, "Telegram: t.me/ginekolog_doc_bot", ln=True)
+    pdf.cell(0, 10, clean("врач акушер-гинеколог Куриленко Юлия Сергеевна"), ln=True)
+    pdf.cell(0, 10, clean("Телефон: +374 55 98 77 15"), ln=True)
+    pdf.cell(0, 10, clean("Telegram: t.me/ginekolog_doc_bot"), ln=True)
 
     filename = f"/mnt/data/protocol_{uuid.uuid4().hex}.pdf"
     pdf.output(filename)
@@ -92,22 +95,22 @@ async def generate_consultation(
     pdf.add_page()
     pdf.add_font("DejaVu", "", "fonts/DejaVuSans.ttf", uni=True)
     pdf.set_font("DejaVu", "", 14)
-    pdf.cell(0, 10, "Консультативное заключение", ln=True, align="C")
+    pdf.cell(0, 10, clean("Консультативное заключение"), ln=True, align="C")
     pdf.ln(10)
 
     pdf.set_font("DejaVu", "", 12)
-    pdf.multi_cell(0, 10, f"Дата: {date or '-'}")
-    pdf.multi_cell(0, 10, f"ФИО: {fio or '-'}")
-    pdf.multi_cell(0, 10, f"Возраст: {age or '-'}")
-    pdf.multi_cell(0, 10, f"Диагноз: {diagnosis or '-'}")
-    pdf.multi_cell(0, 10, f"Обследование: {examination or '-'}")
-    pdf.multi_cell(0, 10, f"Рекомендации: {recommendations or '-'}")
+    pdf.multi_cell(0, 10, clean(f"Дата: {date}"))
+    pdf.multi_cell(0, 10, clean(f"ФИО: {fio}"))
+    pdf.multi_cell(0, 10, clean(f"Возраст: {age}"))
+    pdf.multi_cell(0, 10, clean(f"Диагноз: {diagnosis}"))
+    pdf.multi_cell(0, 10, clean(f"Обследование: {examination}"))
+    pdf.multi_cell(0, 10, clean(f"Рекомендации: {recommendations}"))
 
     pdf.ln(10)
     pdf.set_font("DejaVu", "", 11)
-    pdf.cell(0, 10, "врач акушер-гинеколог Куриленко Юлия Сергеевна", ln=True)
-    pdf.cell(0, 10, "Телефон: +374 55 98 77 15", ln=True)
-    pdf.cell(0, 10, "Telegram: t.me/ginekolog_doc_bot", ln=True)
+    pdf.cell(0, 10, clean("врач акушер-гинеколог Куриленко Юлия Сергеевна"), ln=True)
+    pdf.cell(0, 10, clean("Телефон: +374 55 98 77 15"), ln=True)
+    pdf.cell(0, 10, clean("Telegram: t.me/ginekolog_doc_bot"), ln=True)
 
     filename = f"/mnt/data/consultation_{uuid.uuid4().hex}.pdf"
     pdf.output(filename)
