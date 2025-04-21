@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Консультативное заключение</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Консультативное заключение</h2>
+    <form action="/generate_consultation" method="post">
+      <label>Дата: <input type="date" name="date"></label>
+      <label>ФИО: <input name="fio"></label>
+      <label>Возраст: <input name="age"></label>
+      <label>Диагноз: <textarea name="diagnosis"></textarea></label>
+      <label>Обследование: <textarea name="examination"></textarea></label>
+      <label>Рекомендации: <textarea name="recommendations"></textarea></label>
+      <button type="submit">📄 Скачать PDF</button>
+    </form>
+    <a href="/">Назад к УЗИ</a>
+  </div>
+</body>
+</html>
