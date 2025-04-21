@@ -1,5 +1,4 @@
 fastapi
 uvicorn
 python-multipart
-fpdf2>=2.7.6
-
+fpdf>=2.7.6
