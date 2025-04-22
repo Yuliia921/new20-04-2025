@@ -56,7 +56,7 @@ async def generate_pdf(
     cervix: str = Form(""),
     right_ovary: str = Form(""),
     left_ovary: str = Form(""),
-    fluid: str = Form("")
+    fluid: str = Form(""),
 
     request: Request,
     fio: str = Form(""),
