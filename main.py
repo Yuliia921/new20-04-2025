@@ -64,7 +64,7 @@ async def generate_pdf(
 
     
     title = "Протокол"
-is_ultrasound = False
+    is_ultrasound = False
     is_pelvis = False
     is_consultation = False
 
