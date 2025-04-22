@@ -5,8 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Консультация - Док Куриленко</title>
     <link rel="stylesheet" href="/static/style.css">
+<style>
+  .nav-button {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 8px 12px;
+    background-color: #f2e9f7;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #7b4ca0;
+    font-weight: bold;
+    border: 1px solid #ddd;
+  }
+  .nav-button:hover {
+    background-color: #e0d3f5;
+  }
+</style>
 </head>
 <body>
+    <div style="text-align:center; margin-top:10px;">
+        <a href="/" class="nav-button">УЗИ (беременность)</a>
+        <a href="/pelvis" class="nav-button">УЗИ малого таза</a>
+        <a href="/consultation" class="nav-button">Консультация</a>
+    </div>
+
     <h1>🌸 Консультативное заключение</h1>
     <form action="/generate_pdf" method="post">
         <label>ФИО:</label>
