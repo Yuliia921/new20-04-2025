@@ -58,17 +58,3 @@ button {
 button:hover {
     background-color: #5e3a82;
 }
-
-@media (max-width: 600px) {
-    body {
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 20px;
-    }
-
-    input, textarea, button {
-        font-size: 18px;
-    }
-}
