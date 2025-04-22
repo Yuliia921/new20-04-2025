@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>УЗИ малого таза</title>
+    <link rel="stylesheet" href="/static/style.css">
+<style>
+  .nav-button {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 8px 12px;
+    background-color: #f2e9f7;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #7b4ca0;
+    font-weight: bold;
+    border: 1px solid #ddd;
+  }
+  .nav-button:hover {
+    background-color: #e0d3f5;
+  }
+</style>
+</head>
+<body>
+    <div style="text-align:center; margin-top:10px;">
+        <a href="/" class="nav-button">УЗИ (беременность)</a>
+        <a href="/pelvis" class="nav-button">УЗИ малого таза</a>
+        <a href="/consultation" class="nav-button">Консультация</a>
+    </div>
+
+    <h1>🌸 УЗИ малого таза</h1>
+    <form action="/generate_pdf" method="post">
+        <label>ФИО:</label>
+        <input type="text" name="fio">
+
+        <label>Возраст:</label>
+        <input type="text" name="age">
+
+        <label>Последняя менструация:</label>
+        <input type="text" name="lmp">
+
+        <label>Описание матки:</label>
+        <textarea name="uterus"></textarea>
+
+        <label>Структура миометрия:</label>
+        <input type="text" name="myometrium">
+
+        <label>М-эхо:</label>
+        <input type="text" name="mecho">
+
+        <label>Шейка матки:</label>
+        <input type="text" name="cervix">
+
+        <label>Правый яичник:</label>
+        <input type="text" name="right_ovary">
+
+        <label>Левый яичник:</label>
+        <input type="text" name="left_ovary">
+
+        <label>Дополнительные образования:</label>
+        <textarea name="additional"></textarea>
+
+        <label>Свободная жидкость:</label>
+        <input type="text" name="fluid">
+
+        <label>Заключение:</label>
+        <textarea name="conclusion"></textarea>
+
+        <label>Рекомендации:</label>
+        <textarea name="recommendations"></textarea>
+
+        <label>Email пациента (не отображается в PDF):</label>
+        <input type="email" name="email">
+
+        <button type="submit">Сформировать PDF</button>
+    </form>
+    <div style="text-align:center; margin-top:20px;">
+        <a href="/" style="text-decoration:none; color:#7b4ca0;">Назад</a>
+    </div>
+</body>
+</html>
