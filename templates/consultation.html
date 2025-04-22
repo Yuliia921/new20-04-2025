@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Консультация - Док Куриленко</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>🌸 Консультативное заключение</h1>
+    <form action="/generate_pdf" method="post">
+        <label>ФИО:</label>
+        <input type="text" name="fio">
+
+        <label>Email пациента:</label>
+        <input type="email" name="email">
+
+        <label>Возраст:</label>
+        <input type="text" name="age">
+
+        <label>Диагноз:</label>
+        <textarea name="diagnosis"></textarea>
+
+        <label>Обследование:</label>
+        <textarea name="examination"></textarea>
+
+        <label>Заключение:</label>
+        <textarea name="conclusion"></textarea>
+
+        <label>Рекомендации:</label>
+        <textarea name="recommendations"></textarea>
+
+        <button type="submit">Сформировать PDF</button>
+    </form>
+</body>
+</html>
