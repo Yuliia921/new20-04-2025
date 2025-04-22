@@ -9,7 +9,6 @@ from uuid import uuid4
 from fpdf import FPDF
 
 app = FastAPI()
-
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 os.makedirs("/tmp", exist_ok=True)
@@ -17,14 +16,15 @@ os.makedirs("/tmp", exist_ok=True)
 def clean_value(text):
     if not text or text.strip() == "":
         return "-"
-    try:
-        return text.replace("🌸", "").replace("💬", "").replace("📤", "").strip()
-    except:
-        return "-"
+    return text.strip().replace("🌸", "").replace("💬", "").replace("📤", "")
 
 @app.get("/", response_class=HTMLResponse)
-async def serve_form(request: Request):
+async def serve_ultrasound(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/consultation", response_class=HTMLResponse)
+async def serve_consultation(request: Request):
+    return templates.TemplateResponse("consultation.html", {"request": request})
 
 @app.post("/generate_pdf")
 async def generate_pdf(
@@ -53,8 +53,8 @@ async def generate_pdf(
     pdf.set_auto_page_break(auto=True, margin=25)
     pdf.set_left_margin(15)
     pdf.set_right_margin(15)
-    pdf.add_font("DejaVu", "", "DejaVuSans.ttf", uni=True)
-    pdf.add_font("DejaVu", "B", "DejaVuSans-Bold.ttf", uni=True)
+    pdf.add_font("DejaVu", "", "fonts/DejaVuSans.ttf", uni=True)
+    pdf.add_font("DejaVu", "B", "fonts/DejaVuSans-Bold.ttf", uni=True)
 
     is_ultrasound = any([lmp.strip(), crl.strip(), gestationalSac.strip()])
 
@@ -65,44 +65,34 @@ async def generate_pdf(
     pdf.set_font("DejaVu", "", 12)
 
     fields = [
-        ("ФИО пациентки", fio),
+        ("ФИО", fio),
+        ("Email", email),
+        ("Возраст", age),
+        ("Диагноз", diagnosis),
+        ("Обследование", examination),
         ("Последняя менструация", lmp),
-        ("Положение и форма матки", uterus),
         ("Плодное яйцо (мм)", gestationalSac),
         ("КТР (мм)", crl),
         ("Срок (нед)", term),
         ("Желточный мешок (мм)", yolkSac),
         ("Сердцебиение", heartbeat),
         ("ЧСС (уд/мин)", hr),
-        ("Расположение хориона", chorion),
+        ("Хорион", chorion),
         ("Желтое тело", corpusLuteum),
-        ("Дополнительные данные", additional),
-        ("Заключение", conclusion),
-        ("Рекомендации", recommendations),
-    ] if is_ultrasound else [
-        ("ФИО", fio),
-        ("Возраст", age),
-        ("Диагноз", diagnosis),
-        ("Обследование", examination),
+        ("Дополнительно", additional),
         ("Заключение", conclusion),
         ("Рекомендации", recommendations),
     ]
 
     for label, value in fields:
-        if not label:
-            continue
-        safe_value = clean_value(value)
-        text_line = f"{label.strip()}: {safe_value or '-'}"
-        if len(text_line.strip()) < 3:
-            text_line = f"{label.strip()}: -"
+        text_line = f"{label.strip()}: {clean_value(value)}"
         try:
             pdf.multi_cell(180, 10, text_line)
         except:
             pdf.multi_cell(180, 10, f"{label.strip()}: -")
         pdf.ln(1)
 
-    # Подпись и контакты — последним блоком, аккуратно и компактно
-    pdf.ln(14)
+    pdf.ln(12)
     pdf.set_font("DejaVu", "", 9)
     pdf.cell(0, 6, "врач акушер-гинеколог Куриленко Юлия Сергеевна", ln=True)
     pdf.cell(0, 6, "Телефон: +37455987715", ln=True)
@@ -111,25 +101,25 @@ async def generate_pdf(
     filename = f"/tmp/protocol_{uuid4().hex}.pdf"
     pdf.output(filename)
 
-    try:
-        smtp_user = os.getenv("SMTP_USER")
-        smtp_pass = os.getenv("SMTP_PASS")
+    if email.strip():
+        try:
+            smtp_user = os.getenv("SMTP_USER")
+            smtp_pass = os.getenv("SMTP_PASS")
 
-        msg = EmailMessage()
-        msg["Subject"] = "Ваш протокол из Док Куриленко"
-        msg["From"] = smtp_user
-        msg["To"] = email.strip()
-        msg.set_content("Здравствуйте! Во вложении — ваш протокол в формате PDF.\n\nС уважением,\nКуриленко Ю.С.")
+            msg = EmailMessage()
+            msg["Subject"] = "Ваш протокол из Док Куриленко"
+            msg["From"] = smtp_user
+            msg["To"] = email.strip()
+            msg.set_content("Здравствуйте! Во вложении — ваш протокол в формате PDF.\n\nС уважением,\nКуриленко Ю.С.")
 
-        with open(filename, "rb") as f:
-            file_data = f.read()
-            msg.add_attachment(file_data, maintype="application", subtype="pdf", filename="protocol.pdf")
+            with open(filename, "rb") as f:
+                msg.add_attachment(f.read(), maintype="application", subtype="pdf", filename="protocol.pdf")
 
-        with smtplib.SMTP_SSL("smtp.yandex.ru", 465) as smtp:
-            smtp.login(smtp_user, smtp_pass)
-            smtp.send_message(msg)
+            with smtplib.SMTP_SSL("smtp.yandex.ru", 465) as smtp:
+                smtp.login(smtp_user, smtp_pass)
+                smtp.send_message(msg)
 
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": f"Ошибка отправки письма: {str(e)}"})
+        except Exception as e:
+            return JSONResponse(status_code=500, content={"error": f"Ошибка отправки письма: {str(e)}"})
 
     return FileResponse(filename, media_type="application/pdf", filename="protocol.pdf")
