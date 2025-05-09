@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Поиск протоколов</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .record {
+            margin: 1rem 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .actions {
+            display: none;
+            margin-left: 1.5rem;
+        }
+    </style>
+    <script>
+        function toggleActions(id) {
+            const block = document.getElementById("actions-" + id);
+            block.style.display = block.style.display === "block" ? "none" : "block";
+        }
+    </script>
+</head>
+<body>
+    <h1>Поиск по ФИО</h1>
+    <form method="get" action="/search">
+        <input type="text" name="query" value="{{ query }}" placeholder="Введите ФИО">
+        <button type="submit">Поиск</button>
+    </form>
+    {% if results %}
+        {% for id, date, template in results %}
+            <div class="record" onclick="toggleActions({{ id }})">
+                📄 <strong>{{ date }}</strong> — {{ template }}
+                <div class="actions" id="actions-{{ id }}">
+                    <a href="/view/{{ id }}"><button>👁 Просмотреть</button></a>
+                    <a href="/download/{{ id }}"><button>⬇ Скачать PDF</button></a>
+                    <a href="/delete/{{ id }}" onclick="return confirm('Удалить протокол?');"><button style="color:red">🗑 Удалить</button></a>
+                </div>
+            </div>
+        {% endfor %}
+    {% elif query %}
+        <p>Ничего не найдено по запросу "{{ query }}"</p>
+    {% endif %}
+</body>
+</html>
