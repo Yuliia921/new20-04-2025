@@ -141,6 +141,32 @@ async def generate_pdf(
                   ("Правый яичник", right_ovary), ("Левый яичник", left_ovary),
                   ("Дополнительно", additional), ("Свободная жидкость", fluid),
                   ("Заключение", conclusion), ("Рекомендации", recommendations)]
+    elif anamnez_morbi.strip() or gyn_anamnez.strip() or birthdate.strip():
+    title = "Первичная консультация гинеколога"
+    fields = [("ФИО", f"{clean_value(fio)}\nДата рождения: {clean_value(birthdate)}"),
+              ("Жалобы", complaints),
+              ("Анамнез morbi", anamnez_morbi),
+              ("Гинекологический анамнез", gyn_anamnez),
+              ("Менархе", menarche),
+              ("Менструации", menstruation),
+              ("П.М.", last_period),
+              ("Беременности", pregnancies),
+              ("Гинекологические заболевания", gyn_diseases),
+              ("Соматические заболевания", somatic_diseases),
+              ("Объективный статус", objective),
+              ("Молочные железы", breasts),
+              ("Живот", abdomen),
+              ("Диурез", diuresis),
+              ("Стул", stool),
+              ("Наружные половые органы", external_genitals),
+              ("На зеркалах", speculum),
+              ("Выделения", discharge),
+              ("Шейка матки", cervix),
+              ("PV", pv),
+              ("Диагноз", diagnosis),
+              ("Обследование", examination),
+              ("Рекомендации", recommendations)]
+
     else:
         title = "Консультативное заключение"
         fields = [("ФИО", f"{clean_value(fio)}\nВозраст: {clean_value(age)}"),
