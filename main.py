@@ -66,6 +66,10 @@ async def serve_uzib(request: Request):
 @app.get("/pelvis", response_class=HTMLResponse)
 async def serve_pelvis(request: Request):
     return templates.TemplateResponse("pelvis.html", {"request": request})
+   
+@app.get("/primary", response_class=HTMLResponse)
+async def serve_primary(request: Request):
+    return templates.TemplateResponse("primary.html", {"request": request})
 
 @app.get("/search", response_class=HTMLResponse)
 async def search(request: Request, query: str = ""):
