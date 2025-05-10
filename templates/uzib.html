@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>УЗИ беременности</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin: 12px 0 4px;
+        }
+        input, textarea {
+            width: 100%;
+            max-width: 500px;
+            padding: 8px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 16px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🌸 УЗИ беременности</h2>
+    <form method="post" action="/generate_pdf">
+        <label>ФИО</label>
+        <input type="text" name="fio" required>
+
+        <label>Возраст</label>
+        <input type="text" name="age">
+
+        <label>Последняя менструация</label>
+        <input type="text" name="lmp">
+
+        <label>Плодное яйцо (мм)</label>
+        <input type="text" name="gestationalSac">
+
+        <label>КТР (мм)</label>
+        <input type="text" name="crl">
+
+        <label>Срок (нед.)</label>
+        <input type="text" name="term">
+
+        <label>Желточный мешок (мм)</label>
+        <input type="text" name="yolkSac">
+
+        <label>Сердцебиение</label>
+        <input type="text" name="heartbeat">
+
+        <label>ЧСС</label>
+        <input type="text" name="hr">
+
+        <label>Хорион</label>
+        <input type="text" name="chorion">
+
+        <label>Желтое тело</label>
+        <input type="text" name="corpusLuteum">
+
+        <label>Дополнительно</label>
+        <textarea name="additional"></textarea>
+
+        <label>Заключение</label>
+        <textarea name="conclusion"></textarea>
+
+        <label>Рекомендации</label>
+        <textarea name="recommendations"></textarea>
+
+        <label>Email (если нужно отправить)</label>
+        <input type="email" name="email">
+
+        <button type="submit">Создать PDF</button>
+    </form>
+</body>
+</html>
