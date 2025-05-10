@@ -134,8 +134,8 @@ async def generate_pdf(
 
     if is_ultrasound:
         title = "УЗИ малого таза (беременность)"
-        fields = [("ФИО", f"{clean_value(fio)}
-Возраст: {clean_value(age)}"),
+        ("ФИО", f"{clean_value(fio)}\\nВозраст: {clean_value(age)}")
+
                   ("Последняя менструация", lmp), ("Плодное яйцо (мм)", gestationalSac),
                   ("КТР (мм)", crl), ("Срок (нед)", term), ("Желточный мешок (мм)", yolkSac),
                   ("Сердцебиение", heartbeat), ("ЧСС (уд/мин)", hr), ("Хорион", chorion),
