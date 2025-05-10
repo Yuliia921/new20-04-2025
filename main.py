@@ -58,6 +58,10 @@ async def serve_ultrasound(request: Request):
 @app.get("/consultation", response_class=HTMLResponse)
 async def serve_consultation(request: Request):
     return templates.TemplateResponse("consultation.html", {"request": request})
+    
+@app.get("/uzib", response_class=HTMLResponse)
+async def serve_uzib(request: Request):
+    return templates.TemplateResponse("uzib.html", {"request": request})
 
 @app.get("/pelvis", response_class=HTMLResponse)
 async def serve_pelvis(request: Request):
