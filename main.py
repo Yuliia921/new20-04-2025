@@ -70,14 +70,6 @@ async def serve_consultation(request: Request):
 async def serve_primary(request: Request):
     return templates.TemplateResponse("primary.html", {"request": request})
 
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    conn.close()
-        "request": request,
-        "results": results,
-        "query": query
-    })
-
 @app.post("/generate_pdf")
 async def generate_pdf(
     request: Request,
