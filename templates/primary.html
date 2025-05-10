@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Первичная консультация гинеколога</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        label { display: block; margin-top: 14px; font-weight: bold; }
+        input, textarea {
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 4px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🌸 Первичная консультация гинеколога</h2>
+    <form method="post" action="/generate_pdf">
+        <label>ФИО</label>
+        <input type="text" name="fio" required>
+
+        <label>Дата рождения</label>
+        <input type="text" name="birthdate">
+
+        <label>Жалобы</label>
+        <textarea name="complaints"></textarea>
+
+        <label>Анамнез morbi</label>
+        <textarea name="anamnez_morbi"></textarea>
+
+        <label>Гинекологический анамнез</label>
+        <textarea name="gyn_anamnez"></textarea>
+
+        <label>Менархе</label>
+        <input type="text" name="menarche">
+
+        <label>Менструации (длительность, регулярность, характер)</label>
+        <textarea name="menstruation"></textarea>
+
+        <label>П.М.</label>
+        <input type="text" name="last_period">
+
+        <label>Беременности</label>
+        <textarea name="pregnancies"></textarea>
+
+        <label>Гинекологические заболевания</label>
+        <textarea name="gyn_diseases"></textarea>
+
+        <label>Соматические заболевания</label>
+        <textarea name="somatic_diseases"></textarea>
+
+        <label>Объективный статус</label>
+        <textarea name="objective"></textarea>
+
+        <label>Молочные железы</label>
+        <textarea name="breasts"></textarea>
+
+        <label>Живот</label>
+        <textarea name="abdomen"></textarea>
+
+        <label>Диурез</label>
+        <input type="text" name="diuresis">
+
+        <label>Стул</label>
+        <input type="text" name="stool">
+
+        <label>Наружные половые органы</label>
+        <textarea name="external_genitals"></textarea>
+
+        <label>На зеркалах</label>
+        <textarea name="speculum"></textarea>
+
+        <label>Выделения</label>
+        <textarea name="discharge"></textarea>
+
+        <label>Шейка матки</label>
+        <textarea name="cervix"></textarea>
+
+        <label>PV</label>
+        <textarea name="pv"></textarea>
+
+        <label>Диагноз</label>
+        <textarea name="diagnosis"></textarea>
+
+        <label>Обследование</label>
+        <textarea name="examination"></textarea>
+
+        <label>Рекомендации</label>
+        <textarea name="recommendations"></textarea>
+
+        <button type="submit">Создать PDF</button>
+    </form>
+</body>
+</html>
