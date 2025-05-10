@@ -60,7 +60,7 @@
         <button type="submit">Поиск</button>
     </form>
     {% if results %}
-        {% for id, date, template in results %}
+        {% for id, fio, date, template in results %}
             <div class="record" onclick="toggleActions({{ id }})">
                 📄 <strong>{{ date }}</strong> — {{ template }}
                 <div class="actions" id="actions-{{ id }}">
