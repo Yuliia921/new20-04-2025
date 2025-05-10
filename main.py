@@ -151,7 +151,7 @@ async def generate_pdf(
     elif anamnez_morbi.strip() or gyn_anamnez.strip() or birthdate.strip():
         title = "Первичная консультация гинеколога"
         fields = [("ФИО", f"{clean_value(fio)}\nДата рождения: {clean_value(birthdate)}"),
-                  ("Жалобы", clean_value(request.form()["complaints"])),
+                  ("Жалобы", clean_value(complaints)),
                   ("Анамнез morbi", anamnez_morbi),
                   ("Гинекологический анамнез", gyn_anamnez),
                   ("Менархе", menarche), ("Менструации", menstruation),
