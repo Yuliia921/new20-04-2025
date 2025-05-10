@@ -62,7 +62,7 @@
     {% if results %}
         {% for id, fio, date, template in results %}
             <div class="record" onclick="toggleActions({{ id }})">
-                📄 <strong>{{ date }}</strong> — {{ template }}
+                📄  <strong>{{ date }}</strong> — {{ fio }} — {{ template }}
                 <div class="actions" id="actions-{{ id }}">
                     <a href="/view/{{ id }}"><button>👁 Просмотреть</button></a>
                     <a href="/download/{{ id }}"><button>⬇ Скачать PDF</button></a>
