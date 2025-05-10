@@ -71,7 +71,7 @@ async def serve_primary(request: Request):
     return templates.TemplateResponse("primary.html", {"request": request})
     @app.get("/search", response_class=HTMLResponse)
 
-async def search_protocols(request: Request, query: str = ""):
+    async def search_protocols(request: Request, query: str = ""):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("SELECT id, fio, date, template FROM protocols WHERE fio LIKE ?", (f"%{query}%",))
