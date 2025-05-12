@@ -193,7 +193,7 @@ async def generate_pdf(
 
     filename = f"/tmp/protocol_{uuid4().hex}.pdf"
 
-    signature_path = "static/signature_clean.jpg"
+    signature_path = "static/signature_clean.png"
     pdf.set_font("DejaVu", "", 9)
     pdf.cell(0, 6, "врач акушер-гинеколог Куриленко Юлия Сергеевна", ln=True)
     pdf.cell(0, 6, "Телефон: +37455987715", ln=True)
