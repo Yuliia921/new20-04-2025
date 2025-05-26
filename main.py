@@ -257,13 +257,13 @@ async def download_backup():
 async def view_protocol(protocol_id: int):
     path = f"data/protocols/{protocol_id}.pdf"
     if os.path.exists(path):
-        return FileResponse(path, media_type="application/pdf", filename=f"protocol_{protocol_id}.pdf")
+    return FileResponse(path, media_type="application/pdf", filename=f"protocol_{protocol_id}.pdf")
     return HTMLResponse("Файл не найден", status_code=404)
 
 @app.get("/download/{protocol_id}", response_class=FileResponse)
 async def download_protocol(protocol_id: int):
     path = f"data/protocols/{protocol_id}.pdf"
     if os.path.exists(path):
-        return FileResponse(path, media_type="application/pdf", filename=f"protocol_{protocol_id}.pdf")
+    return FileResponse(path, media_type="application/pdf", filename=f"protocol_{protocol_id}.pdf")
     return HTMLResponse("Файл не найден", status_code=404)
 
