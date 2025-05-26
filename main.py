@@ -253,3 +253,17 @@ async def download_backup():
                 rel_path = os.path.relpath(full_path, start="data")
                 backup_zip.write(full_path, arcname=rel_path)
     return FileResponse(zip_path, filename="backup.zip", media_type="application/zip")
+    @app.get("/view/{protocol_id}", response_class=FileResponse)
+async def view_protocol(protocol_id: int):
+    path = f"data/protocols/{protocol_id}.pdf"
+    if os.path.exists(path):
+        return FileResponse(path, media_type="application/pdf", filename=f"protocol_{protocol_id}.pdf")
+    return HTMLResponse("Файл не найден", status_code=404)
+
+@app.get("/download/{protocol_id}", response_class=FileResponse)
+async def download_protocol(protocol_id: int):
+    path = f"data/protocols/{protocol_id}.pdf"
+    if os.path.exists(path):
+        return FileResponse(path, media_type="application/pdf", filename=f"protocol_{protocol_id}.pdf")
+    return HTMLResponse("Файл не найден", status_code=404)
+
