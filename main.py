@@ -31,6 +31,7 @@ init_db()
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static/protocols", StaticFiles(directory="data/protocols"), name="protocols")
 templates = Jinja2Templates(directory="templates")
 os.makedirs("/tmp", exist_ok=True)
 
