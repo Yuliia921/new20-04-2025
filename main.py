@@ -45,8 +45,9 @@ def save_to_db(fio, template, content):
     cursor.execute("INSERT INTO protocols (fio, date, template, content) VALUES (?, ?, ?, ?)",
     (fio.strip(), date, template, content))
     protocol_id = cursor.lastrowid
-    return protocol_id
+    conn.commit()
     conn.close()
+    return protocol_id
 
 def clean_value(text):
     if not text or text.strip() == "":
@@ -131,7 +132,13 @@ async def generate_pdf(
     pdf.set_font("DejaVu", "B", 16)
     pdf.cell(0, 10, "Протокол", ln=True, align="C")
     pdf.ln(10)
+    # ---- Дата в PDF ----
+    date_str = datetime.now().strftime("%d.%m.%Y")
+    pdf.set_font("DejaVu", "", 11)
+    pdf.cell(0, 8, f"Дата: {date_str}", ln=True, align="R")
+    pdf.ln(2)
     pdf.set_font("DejaVu", "", 12)
+    # --------------------
 
     is_ultrasound = any([crl.strip(), gestationalSac.strip(), chorion.strip()])
     is_pelvis = any([mecho.strip(), myometrium.strip(), right_ovary.strip(), left_ovary.strip(), fluid.strip()])
@@ -281,7 +288,6 @@ async def view_protocol(protocol_id: int, request: Request):
     if os.path.exists(local_path):
         return templates.TemplateResponse("viewer.html", {"request": request, "file_url": file_url})
     return HTMLResponse("Файл не найден", status_code=404)
-
 
 @app.get("/delete/{protocol_id}", response_class=HTMLResponse)
 async def delete_protocol(protocol_id: int):
