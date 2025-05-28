@@ -1,77 +1,48 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Поиск протоколов</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
-    <style>
-        body {
-            font-family: sans-serif;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            font-size: 22px;
-            margin-bottom: 1em;
-        }
-        form {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
-            width: 90%;
-            max-width: 300px;
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px 16px;
-            font-size: 16px;
-        }
-        .record {
-            margin: 1rem 0;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .actions {
-            display: none;
-            margin-left: 1rem;
-        }
-        .actions a button {
-            margin-right: 10px;
-            margin-top: 8px;
-        }
-    </style>
-    <script>
-        function toggleActions(id) {
-            const block = document.getElementById("actions-" + id);
-            block.style.display = block.style.display === "block" ? "none" : "block";
-        }
-    </script>
 </head>
 <body>
-    <h1>Поиск по пациентам</h1>
-    <form method="get" action="/search">
-        <input type="text" name="query" value="{{ query }}" placeholder="Введите ФИО">
-        <br>
+    <h2>Поиск по ФИО или дате (YYYY-MM-DD)</h2>
+    <form method="get">
+        <input type="text" name="query" value="{{ query }}" placeholder="Введите ФИО или дату">
         <button type="submit">Поиск</button>
     </form>
+    <br>
     {% if results %}
-        {% for id, fio, date, template in results %}
-            <div class="record" onclick="toggleActions({{ id }})">
-                📄  <strong>{{ date }}</strong> — {{ fio }} — {{ template }}
-                <div class="actions" id="actions-{{ id }}">
-                    <a href="/view/{{ id }}"><button>👁 Просмотреть</button></a>
-                    <a href="/download/{{ id }}"><button>⬇ Скачать PDF</button></a>
-                    <a href="/delete/{{ id }}" onclick="return confirm('Удалить протокол?');"><button style="color:red">🗑 Удалить</button></a>
-                </div>
-            </div>
-        {% endfor %}
-    {% elif query %}
-        <p>Ничего не найдено по запросу "{{ query }}"</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ФИО</th>
+                    <th>Дата</th>
+                    <th>Шаблон</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>
+                        <a href="/download/{{ row[0] }}">Скачать</a>
+                        <a href="/view/{{ row[0] }}" target="_blank">Просмотреть</a>
+                        <a href="/delete/{{ row[0] }}" onclick="return confirm('Удалить протокол?');">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Ничего не найдено.</p>
     {% endif %}
+    <br>
+    <a href="/">На главную</a>
 </body>
 </html>
